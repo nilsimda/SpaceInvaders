@@ -1,9 +1,9 @@
-package controller;
+package src.controller;
 
 import view.GUI;
-import model.DataManager;
-import model.Cannon;
-import model.Spaceship;
+import src.model.DataManager;
+import src.model.Cannon;
+import src.model.Spaceship;
 
 import java.util.*;
 
