@@ -1,7 +1,5 @@
 package src.model;
 
-import src.controller.GameBoard;
-
 public class Spaceship {
 	
 	//change to a suitable value for the GUI scale if necessary
@@ -9,7 +7,19 @@ public class Spaceship {
 	
 	private int positionX, positionY;
 	private boolean alive;
-	private GameBoard gameBoard;
+	private final GameObjectFacade gameBoard;
+	
+	/**
+	 * Sets up a new Spaceship at the top of the GUI at the specified x-coordinate
+	 * @param gameBoard the GameObjectFacade instance to communicate with
+	 * @param posX the initial x-coordinate of the spaceship
+	 */
+	public Spaceship(GameObjectFacade gameBoard, int posX) {
+		this.gameBoard = gameBoard;
+		this.alive = true;
+		this.positionX = posX;
+		this.positionY = gameBoard.getGUIHeight() - 10;
+	}
 	
 	/**
 	 * Sets the alive attribute of the spaceship to false, 
@@ -26,7 +36,7 @@ public class Spaceship {
 	 * @param deltaY the value to be moved on the y-axis. Positive values mean movements downwards and vice versa,
 	 */
 	public void move(int deltaX, int deltaY) {
-		positionX = (positionX + deltaX) % GameBoard.GUI_WIDTH;
+		positionX = (positionX + deltaX) % gameBoard.getGUIWidth();
 		positionY = (positionY + deltaY);
 		if(this.positionY <= 0) {
 			//the spaceship has hit the ground

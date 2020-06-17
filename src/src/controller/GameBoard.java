@@ -2,8 +2,7 @@ package src.controller;
 
 import view.GUI;
 import src.model.DataManager;
-import src.model.Cannon;
-import src.model.Spaceship;
+import src.model.GameObjectFacade;
 
 import java.util.*;
 
@@ -17,8 +16,7 @@ public class GameBoard {
 	
 	private GUI gui;
 	private DataManager dataManager;
-	private Cannon cannon;
-	private List<Spaceship> spaceships;
+	private GameObjectFacade gameObjects;
 	
 	//TODO add constructor
 	
@@ -40,10 +38,5 @@ public class GameBoard {
 	}
 	public void passInput() {
 		//TODO
-	}
-	
-	//getter methods
-	public List<Spaceship> getSpaceships() {
-		return spaceships;
 	}
 }

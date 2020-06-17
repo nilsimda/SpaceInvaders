@@ -1,31 +1,27 @@
 package src.model;
 
-import src.controller.GameBoard;
-
-import java.util.List;
+import java.util.Set;
 
 public class Cannon {
 	
 	private int position;
-	private GameBoard gameBoard;
+	private final GameObjectFacade gameBoard;
 	
 	/**
-	 * Moves the cannon by the specified delta value. If the cannon moves out of the field, 
-	 * it comes back in on the other side.
-	 * @param delta Positive values correspond to movements to the right,
-	 * negative ones to movements to the left.
+	 * Sets up the player Cannon.
+	 * @param gameBoard the GameObjectFacade instance to communicate with
 	 */
-	public void steer(int delta) {
-		position = (position + delta) % GameBoard.GUI_WIDTH;
+	public Cannon(GameObjectFacade gameBoard) {
+		this.gameBoard = gameBoard;
+		this.position = 0;
 	}
 	
-	/**
-	 * Fires the cannon's laser. This method then checks, if a spaceship was hit, and if so, destorys that spaceship
-	 * (it removes it from the gameboard's spaceship List).
-	 * If multiple spaceships are hit in one line they are all destroyed.
-	 */
+	public void steer(int delta) {
+		position = (position + delta) % gameBoard.getGUIWidth();
+	}
+	
 	public void fire() {
-		List<Spaceship> spaceships = gameBoard.getSpaceships();
+		Set<Spaceship> spaceships = gameBoard.getSpaceships();
 		for(Spaceship s : spaceships) {
 			//if the spaceship is in the firin line of the cannon, destroy it
 			if(s.getX() <= position && s.getX() + Spaceship.spaceshipWidth >= position) {
