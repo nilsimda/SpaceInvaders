@@ -1,6 +1,6 @@
 package src.model;
 
-import controller.GameBoard;
+import src.controller.GameBoard;
 
 public class DataManager {
 	

@@ -9,6 +9,12 @@ import java.util.*;
 
 public class GameBoard {
 	
+	//feel free to adjust these values if necessary
+	public static final int GUI_WIDTH = 500;
+	public static final int GUI_HEIGHT = 500;
+	
+	private boolean GAME_OVER;
+	
 	private GUI gui;
 	private DataManager dataManager;
 	private Cannon cannon;
@@ -27,12 +33,17 @@ public class GameBoard {
 		//TODO
 	}
 	public void gameOver() {
-		//TODO
+		this.GAME_OVER = true;
 	}
 	public void measureScore() {
 		//TODO
 	}
 	public void passInput() {
 		//TODO
+	}
+	
+	//getter methods
+	public List<Spaceship> getSpaceships() {
+		return spaceships;
 	}
 }

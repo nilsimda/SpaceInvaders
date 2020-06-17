@@ -1,6 +1,6 @@
 package view;
 
-import controller.GameBoard;
+import src.controller.GameBoard;
 
 public class GUI {
 	
