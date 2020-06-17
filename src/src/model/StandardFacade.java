@@ -4,12 +4,15 @@ import src.controller.GameBoard;
 
 import java.util.Set;
 import java.util.HashSet;
+import java.util.stream.Stream;
+import java.time.LocalDateTime;
 
 public class StandardFacade implements GameObjectFacade {
 	
 	private final GameBoard gameBoard;
 	private Cannon cannon;
 	private Set<Spaceship> spaceships;
+	private DataManager dataManager;
 	
 	/**
 	 * This constructor sets up all the game objects (cannon and spaceships) that are necessary to play the game. 
@@ -21,6 +24,7 @@ public class StandardFacade implements GameObjectFacade {
 		this.gameBoard = gameBoard;
 		this.cannon = new Cannon(this);
 		this.spaceships = new HashSet<>();
+		this.dataManager = new DataManager();
 		//add some initial spaceships
 		spawnRandomSpaceships();
 	}
@@ -94,5 +98,17 @@ public class StandardFacade implements GameObjectFacade {
 	@Override
 	public Set<Spaceship> getSpaceships() {
 		return spaceships;
+	}
+	
+	@Override
+	public void saveData(int score, LocalDateTime time) {
+		//delegate to the data manager
+		dataManager.saveData(score, time);
+	}
+	
+	@Override
+	public Stream<Score> getData() {
+		//delegate to the data manager
+		return dataManager.getData();
 	}
 }

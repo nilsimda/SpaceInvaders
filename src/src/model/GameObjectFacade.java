@@ -1,6 +1,8 @@
 package src.model;
 
 import java.util.Set;
+import java.util.stream.Stream;
+import java.time.LocalDateTime;
 
 public interface GameObjectFacade {
 	
@@ -29,12 +31,17 @@ public interface GameObjectFacade {
 	 * If multiple spaceships are hit in one line they are all destroyed.
 	 */
 	public void fireCannon();
+	
 	public int getSpaceshipWidth();
 	public int getSpaceshipHeight();
+	
+	public void saveData(int score, LocalDateTime time);
+	public Stream<Score> getData();
 	
 	//methods to be invoked by the game objects to acces the game board
 	public int getGUIWidth();
 	public int getGUIHeight();
+	
 	/**
 	 * set the gameboard's GAME_OVER flag
 	 */
