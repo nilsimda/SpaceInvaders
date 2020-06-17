@@ -25,14 +25,32 @@ public class StandardFacade implements GameObjectFacade {
 		spawnRandomSpaceships();
 	}
 	
+	
+	/**
+	 * This method simply moved all spaceships one pixel closer to the ground
+	 */
 	@Override
 	public void moveSpaceships() {
-		// TODO add a moving algortihm
+		//simple moving algorithm that just moves all the spaceships one pixel closer to the ground
+		for(Spaceship s : spaceships) {
+			s.move(0, -1);
+		}
 	}
 	
+	/**
+	 * Spawns a random number (between 1 and 5, inclusive) of Spaceships on the top of the screen at random locations
+	 */
 	@Override
 	public void spawnRandomSpaceships() {
-		// TODO add a spawning algorithm
+		int numberOfSpaceships = 1 + (int)(Math.random() * 4);
+		int coordinate = 0;
+		for(int i=0; i<numberOfSpaceships; i++) {
+			coordinate = coordinate +						//spawn the spaceship left of the previous ones
+					(int)(Math.random() *					//in a random location
+					(GameBoard.GUI_WIDTH - Spaceship.spaceshipWidth - coordinate) /
+					(numberOfSpaceships - i));				//so that there is enoug space for the other ones
+			spaceships.add(new Spaceship(this, coordinate));
+		}
 	}
 	
 	@Override
@@ -55,6 +73,16 @@ public class StandardFacade implements GameObjectFacade {
 	@Override
 	public int getGUIHeight() {
 		return GameBoard.GUI_HEIGHT;
+	}
+	
+	@Override
+	public int getSpaceshipWidth() {
+		return Spaceship.spaceshipWidth;
+	}
+	
+	@Override
+	public int getSpaceshipHeight() {
+		return Spaceship.spaceshipHeight;
 	}
 	
 	@Override

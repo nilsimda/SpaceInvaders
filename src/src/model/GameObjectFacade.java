@@ -6,12 +6,12 @@ public interface GameObjectFacade {
 	
 	//methods to be invoked by the gameboard to access the game objects
 	/**
-	 * Moves all Spaceships by one "step" meaning that they come closer to the ground
+	 * Moves all Spaceships by one "step" meaning especially that they come closer to the ground
 	 */
 	public void moveSpaceships();
 	
 	/**
-	 * Spawns a random number (between 1 and 5) of Spaceships on the top of the screen at random locations
+	 * Spawns a random number of Spaceships on the top of the screen at random locations
 	 */
 	public void spawnRandomSpaceships();
 	
@@ -29,6 +29,8 @@ public interface GameObjectFacade {
 	 * If multiple spaceships are hit in one line they are all destroyed.
 	 */
 	public void fireCannon();
+	public int getSpaceshipWidth();
+	public int getSpaceshipHeight();
 	
 	//methods to be invoked by the game objects to acces the game board
 	public int getGUIWidth();

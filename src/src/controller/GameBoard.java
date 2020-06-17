@@ -9,8 +9,8 @@ import java.util.*;
 public class GameBoard {
 	
 	//feel free to adjust these values if necessary
-	public static final int GUI_WIDTH = 500;
-	public static final int GUI_HEIGHT = 500;
+	public static final int GUI_WIDTH = 700;
+	public static final int GUI_HEIGHT = 700;
 	
 	private boolean GAME_OVER;
 	
