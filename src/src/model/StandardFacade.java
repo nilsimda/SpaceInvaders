@@ -1,4 +1,4 @@
-package src.model;
+package src.src.model;
 
 import src.controller.GameBoard;
 

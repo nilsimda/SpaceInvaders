@@ -1,8 +1,8 @@
-package src.controller;
+package src.src.controller;
 
 import view.GUI;
-import src.model.DataManager;
-import src.model.GameObjectFacade;
+import src.src.model.DataManager;
+import src.src.model.GameObjectFacade;
 
 import java.util.*;
 

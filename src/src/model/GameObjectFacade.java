@@ -1,4 +1,4 @@
-package src.model;
+package src.src.model;
 
 import java.util.Set;
 import java.util.stream.Stream;
@@ -36,7 +36,7 @@ public interface GameObjectFacade {
 	public int getSpaceshipHeight();
 	
 	public void saveData(int score, LocalDateTime time);
-	public Stream<Score> getData();
+	public Stream<src.src.model.Score> getData();
 	
 	//methods to be invoked by the game objects to acces the game board
 	public int getGUIWidth();
@@ -48,5 +48,5 @@ public interface GameObjectFacade {
 	public void gameOver();
 	
 	//methods to be invoked by the gameobjects to access each other
-	Set<Spaceship> getSpaceships();
+	Set<src.src.model.Spaceship> getSpaceships();
 }

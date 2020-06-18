@@ -1,11 +1,15 @@
-package src.model;
+package src.src.model;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.util.stream.Stream;
-
-import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.file.*;
 
 public class DataManager {
 	
