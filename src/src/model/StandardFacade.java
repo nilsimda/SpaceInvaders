@@ -1,6 +1,6 @@
 package src.src.model;
 
-import src.controller.GameBoard;
+import src.src.controller.GameBoard;
 
 import java.util.Set;
 import java.util.HashSet;
