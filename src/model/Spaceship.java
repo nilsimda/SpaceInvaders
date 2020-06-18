@@ -1,4 +1,4 @@
-package src.src.model;
+package model;
 
 public class Spaceship {
 	
