@@ -1,8 +1,8 @@
 package model;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Stream;
-import java.time.LocalDateTime;
 
 public interface GameObjectFacade {
 	
@@ -26,9 +26,10 @@ public interface GameObjectFacade {
 	public void steerCannon(int deltaX);
 	
 	/**
-	 * Fires the cannon's laser. This method then checks, if a spaceship was hit, and if so, destorys that spaceship
+	 * Fires the cannon's laser. This method then checks, if a spaceship was hit, and if so, destroys that spaceship
 	 * (it removes it from the gameboard's spaceship List).
-	 * If multiple spaceships are hit in one line they are all destroyed.
+	 * Only one spaceship can be destroyed at a time
+	 * This method also should forward the score-value of the destroyed ship to the gameboard
 	 */
 	public void fireCannon();
 	

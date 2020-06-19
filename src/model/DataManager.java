@@ -3,7 +3,7 @@ package model;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -21,7 +21,8 @@ public class DataManager {
 	 * @param time the time at which the game was played
 	 */
 	public void saveData(int score, LocalDateTime time) {
-		try(BufferedWriter bw = Files.newBufferedWriter(scorefile, Charset.forName("UTF-8"),
+		//TODO Add a name parameter name, we need to store names too!
+		try(BufferedWriter bw = Files.newBufferedWriter(scorefile, StandardCharsets.UTF_8,
 				StandardOpenOption.APPEND, StandardOpenOption.CREATE)) {
 			bw.append(new Score(score, time).toString() + "\n");
 			bw.flush();
@@ -38,7 +39,7 @@ public class DataManager {
 	public Stream<Score> getData() {
 		Stream<String> lines = Stream.of("0000-00-00T00:00:00\t0");
 		
-		try(BufferedReader br = Files.newBufferedReader(scorefile, Charset.forName("UTF-8"))) {
+		try(BufferedReader br = Files.newBufferedReader(scorefile, StandardCharsets.UTF_8)) {
 			lines = br.lines();
 		}
 		catch(IOException exc) {
@@ -46,6 +47,6 @@ public class DataManager {
 			System.out.println(exc.getMessage());
 		}
 		
-		return lines.map(s -> Score.parse(s));
+		return lines.map(Score::parse);
 	}
 }

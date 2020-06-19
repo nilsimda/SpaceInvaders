@@ -6,9 +6,11 @@ public class Spaceship {
 	//but feel free to change them if necessary (use these constants, don't define new ones)
 	public static final int spaceshipWidth = 50;
 	public static final int spaceshipHeight = 50;
+
 	
 	private int positionX, positionY;
 	private boolean alive;
+	public final int scorePerShip = 50;
 	private final GameObjectFacade gameBoard;
 	
 	/**

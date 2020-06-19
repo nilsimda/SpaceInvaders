@@ -2,10 +2,10 @@ package model;
 
 import controller.GameBoard;
 
-import java.util.Set;
-import java.util.HashSet;
-import java.util.stream.Stream;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Stream;
 
 public class StandardFacade implements GameObjectFacade {
 	
@@ -52,7 +52,7 @@ public class StandardFacade implements GameObjectFacade {
 			coordinate = coordinate +						//spawn the spaceship left of the previous ones
 					(int)(Math.random() *					//in a random location
 					(GameBoard.GUI_WIDTH - Spaceship.spaceshipWidth - coordinate) /
-					(numberOfSpaceships - i));				//so that there is enoug space for the other ones
+					(numberOfSpaceships - i));				//so that there is enough space for the other ones
 			spaceships.add(new Spaceship(this, coordinate));
 		}
 	}
@@ -66,7 +66,9 @@ public class StandardFacade implements GameObjectFacade {
 	@Override
 	public void fireCannon() {
 		//delegate the method call to the Cannon object
-		cannon.fire();
+		int val = cannon.fire();
+		//forward score to gameBoard
+		gameBoard.addToScore(val);
 	}
 
 	@Override
