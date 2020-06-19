@@ -21,9 +21,13 @@ public class GameBoard {
     private GUI gui;
     private DataManager dataManager;
     private GameObjectFacade gameObjects;
-
-    public GameBoard() {
-        this.gui = new GUI();
+    
+    /**
+     * creates a new gameboard and game instance for a given GUI
+     * @param gui the GUI creating the gameboard
+     */
+    public GameBoard(GUI gui) {
+        this.gui = gui;
         this.dataManager = new DataManager();
         this.gameObjects = new StandardFacade(this);
         this.currentScore = 0;
@@ -52,6 +56,7 @@ public class GameBoard {
     public void measureScore() {
         /*TODO How should Score be measured? I propose that every shot down spaceship gives a certain amount of points,
          * additionally, maybe time survived should also be factored in here, to give scores a more "fancy" look
+         * Thats a good idea, lets implement it first in that way
          */
     }
 
