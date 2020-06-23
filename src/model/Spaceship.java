@@ -8,7 +8,7 @@ public class Spaceship {
 	public static final int spaceshipHeight = 50;
 
 	
-	private int positionX, positionY;
+	private double positionX, positionY;
 	private boolean alive;
 	public final int scorePerShip = 50;
 	private final GameObjectFacade gameBoard;
@@ -49,13 +49,14 @@ public class Spaceship {
 	}
 	
 	//getter methods
-	public int getX() {
+	public double getX() {
 		return positionX;
 	}
-	public int getY() {
+	public double getY() {
 		return positionY;
 	}
 	public boolean getAlive() {
 		return alive;
 	}
+
 }

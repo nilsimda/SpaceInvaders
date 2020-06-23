@@ -40,13 +40,15 @@ public interface GameObjectFacade {
 	public Stream<Score> getData();
 	
 	//methods to be invoked by the game objects to acces the game board
-	public int getGUIWidth();
-	public int getGUIHeight();
+	public double getGUIWidth();
+	public double getGUIHeight();
 	
 	/**
 	 * set the gameboard's GAME_OVER flag
 	 */
 	public void gameOver();
+
+	public Cannon getCannon();
 	
 	//methods to be invoked by the gameobjects to access each other
 	Set<Spaceship> getSpaceships();

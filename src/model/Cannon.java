@@ -4,6 +4,8 @@ import java.util.Set;
 
 public class Cannon {
 
+    public static double cannonHeight = 45;
+    public static double cannonWidth = 45;
     private int position;
     private final GameObjectFacade gameBoard;
 
@@ -18,7 +20,7 @@ public class Cannon {
     }
 
     public void steer(int delta) {
-        position = (position + delta) % gameBoard.getGUIWidth();
+        position = (int) ((position + delta) % gameBoard.getGUIWidth());
     }
 
 
@@ -43,5 +45,9 @@ public class Cannon {
         //remove the eventually destroyed spaceships from the List
         spaceships.removeIf(s -> !s.getAlive());
         return scoreToAdd;
+    }
+
+    public int getPosition() {
+        return position;
     }
 }

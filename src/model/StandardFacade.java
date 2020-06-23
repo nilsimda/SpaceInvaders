@@ -72,12 +72,12 @@ public class StandardFacade implements GameObjectFacade {
 	}
 
 	@Override
-	public int getGUIWidth() {
+	public double getGUIWidth() {
 		return GameBoard.GUI_WIDTH;
 	}
 	
 	@Override
-	public int getGUIHeight() {
+	public double getGUIHeight() {
 		return GameBoard.GUI_HEIGHT;
 	}
 	
@@ -112,5 +112,9 @@ public class StandardFacade implements GameObjectFacade {
 	public Stream<Score> getData() {
 		//delegate to the data manager
 		return dataManager.getData();
+	}
+
+	public Cannon getCannon(){
+		return cannon;
 	}
 }

@@ -1,8 +1,10 @@
 package controller;
 
+import javafx.geometry.Dimension2D;
 import model.GameObjectFacade;
 import model.StandardFacade;
 import view.GUI;
+
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -10,22 +12,34 @@ import java.time.LocalDateTime;
 public class GameBoard {
 
     //feel free to adjust these values if necessary
-    public static final int GUI_WIDTH = 700;
-    public static final int GUI_HEIGHT = 700;
+    public static double GUI_WIDTH;
+    public static double GUI_HEIGHT;
 
     private boolean GAME_OVER;
     private int currentScore;
     private Timestamp startTime;
 
     private GUI gui;
+
+    public GameObjectFacade getGameObjects() {
+        return gameObjects;
+    }
+
     private GameObjectFacade gameObjects;
     
     /**
      * Creates a new gameboard and game instance for a given GUI
-     * @param gui the GUI creating the gameboard
+     * @param size the GUI creating the gameboard
      */
-    public GameBoard(GUI gui) {
+    /*public GameBoard(GUI gui) {
         this.gui = gui;
+        this.gameObjects = new StandardFacade(this);
+        this.currentScore = 0;
+    }*/
+
+    public GameBoard(Dimension2D size){
+        GUI_WIDTH = size.getWidth();
+        GUI_HEIGHT = size.getHeight();
         this.gameObjects = new StandardFacade(this);
         this.currentScore = 0;
     }
