@@ -1,6 +1,5 @@
 package controller;
 
-import model.DataManager;
 import model.GameObjectFacade;
 import model.StandardFacade;
 import view.GUI;
@@ -19,53 +18,61 @@ public class GameBoard {
     private Timestamp startTime;
 
     private GUI gui;
-    private DataManager dataManager;
     private GameObjectFacade gameObjects;
     
     /**
-     * creates a new gameboard and game instance for a given GUI
+     * Creates a new gameboard and game instance for a given GUI
      * @param gui the GUI creating the gameboard
      */
     public GameBoard(GUI gui) {
         this.gui = gui;
-        this.dataManager = new DataManager();
         this.gameObjects = new StandardFacade(this);
         this.currentScore = 0;
-        // TODO Make game start immediatly here?
     }
-
-    //return types of some methods will be changed
+    
+    /**
+     * Starts the game
+     */
     public void startGame() {
         startTime = Timestamp.valueOf(LocalDateTime.now());
+        //TODO create a thread for moving the spaceships
+        
+        //TODO terminate the spaceship thread
+        String name = enterName();
+        gameObjects.saveData(currentScore, startTime.toLocalDateTime(), name);
     }
-
+    
     public void moveSpaceships() {
         gameObjects.moveSpaceships();
     }
 
-    public void enterName() {
-        //TODO
+    public String enterName() {
+        //TODO call a method in GUI that gets the name
+    	return null;
     }
 
     public void gameOver() {
         this.GAME_OVER = true;
-        //TODO find a better way to include playtime in score
         addToScore((int) (Timestamp.valueOf(LocalDateTime.now()).getTime() - startTime.getTime()));
-    }
-
-    public void measureScore() {
-        /*TODO How should Score be measured? I propose that every shot down spaceship gives a certain amount of points,
-         * additionally, maybe time survived should also be factored in here, to give scores a more "fancy" look
-         * Thats a good idea, lets implement it first in that way
-         */
     }
 
     public void addToScore(int scoreToAdd) {
         if (scoreToAdd < 0) throw new IllegalArgumentException("Can't add negative score!");
         currentScore += scoreToAdd;
     }
-
-    public void passInput() {
-        //TODO What does this do?
+    
+    /**
+     * Moves the cannon by the given delta value
+     * @param delta The distance to move the cannon. Negative values result in movements to the left and vice versa
+     */
+    public void moveCannon(int delta) {
+    	gameObjects.steerCannon(delta);
+    }
+    
+    /**
+     * Fires the cannon
+     */
+    public void fireCannon() {
+    	gameObjects.fireCannon();
     }
 }
