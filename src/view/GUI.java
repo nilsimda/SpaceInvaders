@@ -7,18 +7,22 @@ import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.Cannon;
 import model.Spaceship;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 
 
 public class GUI extends Canvas implements Runnable {
-    private static String SPACESHIP_IMAGE = "spaceship.jpg";
-    private static String CANNON_IMAGE = "cannon.jpg";
-    private static final Color backgroundColor = Color.WHITE;
+    private static String SPACESHIP_IMAGE = "spaceship.png";
+    private static String CANNON_IMAGE = "cannon.png";
+    private static final Color backgroundColor = Color.BLACK;
     private static final int SLEEP_TIME = 1000 / 25; // this gives us 25fps
     private static final Dimension2D DEFAULT_SIZE = new Dimension2D(500, 300);
     // attribute inherited by the JavaFX Canvas class
@@ -40,17 +44,48 @@ public class GUI extends Canvas implements Runnable {
         this.size = new Dimension2D(getWidth(), getHeight());
         /*this.gameBoard.resetCars();
         this.gameBoard.getGameObjects().getSpaceships().forEach((car -> this.carImages.put(car, getImage(car.getIconLocation()))));
-        this.carImages.put(this.gameBoard.getPlayerCar(), this.getImage(this.gameBoard.getPlayerCar().getIconLocation()));
+        this.carImages.put(this.gameBoard.getPlayerCar(), this.getImage(this.gameBoard.getPlayerCar().getIconLocation()));*/
         paint(this.graphicsContext);
-        */
+    }
+
+    public void startGame() {
+        this.gameBoard.startGame();
+        thread = new Thread(this);
+        thread.start();
+        paint(this.graphicsContext);
+    }
+
+    private Image getSpaceShipImage() {
+        try {
+            URL spaceshipImageUrl = this.getClass().getClassLoader().getResource(SPACESHIP_IMAGE);
+            if (spaceshipImageUrl == null) {
+                throw new RuntimeException("Please ensure that your resources folder contains the appropriate files for this exercise.");
+            }
+            InputStream inputStream = spaceshipImageUrl.openStream();
+            return new Image(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private Image getCannonImage() {
+        try {
+            URL spaceshipImageUrl = this.getClass().getClassLoader().getResource(CANNON_IMAGE);
+            if (spaceshipImageUrl == null) {
+                throw new RuntimeException("Please ensure that your resources folder contains the appropriate files for this exercise.");
+            }
+            InputStream inputStream = spaceshipImageUrl.openStream();
+            return new Image(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private void paint(GraphicsContext graphics) {
-
         graphics.setFill(backgroundColor);
         graphics.fillRect(0, 0, getWidth(), getHeight());
-
-        // render player car
 
         for (Spaceship spaceship : this.gameBoard.getGameObjects().getSpaceships()) {
             paintSpaceships(spaceship, graphics);
@@ -64,14 +99,14 @@ public class GUI extends Canvas implements Runnable {
         Point2D spaceshipPosition = new Point2D(spaceship.getX(), spaceship.getY());
         Point2D canvasPosition = convertPosition(spaceshipPosition);
 
-        graphics.drawImage(null, canvasPosition.getX(), canvasPosition.getY(),
+        graphics.drawImage(getSpaceShipImage(), canvasPosition.getX(), canvasPosition.getY(),
                 Spaceship.spaceshipWidth, Spaceship.spaceshipHeight);
     }
 
     private void paintCannon(Cannon cannon, GraphicsContext graphics) {
-        Point2D cannonPos = new Point2D(cannon.getPosition(), 0);
+        Point2D cannonPos = new Point2D(cannon.getPosition(), 50);
         Point2D canvasPosition = convertPosition(cannonPos);
-        graphics.drawImage(null, canvasPosition.getX(), canvasPosition.getY(), Cannon.cannonWidth, Cannon.cannonHeight);
+        graphics.drawImage(getCannonImage(), canvasPosition.getX(), canvasPosition.getY(), Cannon.cannonWidth, Cannon.cannonHeight);
     }
 
     public Point2D convertPosition(Point2D toConvert) {
@@ -81,8 +116,15 @@ public class GUI extends Canvas implements Runnable {
 
     @Override
     public void run() {
-
+        while (!this.gameBoard.isGAME_OVER()) {
+            //TODO move cannon according to user input
+            this.gameBoard.getGameObjects().moveSpaceships(); //only moves Spaceships currently
+            paint(this.graphicsContext);
+            try {
+                Thread.sleep(SLEEP_TIME); // milliseconds to sleep
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
-
-
 }

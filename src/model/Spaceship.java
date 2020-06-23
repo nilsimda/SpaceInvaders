@@ -4,8 +4,8 @@ public class Spaceship {
 	
 	//adjust the spaceship image size to these values
 	//but feel free to change them if necessary (use these constants, don't define new ones)
-	public static final int spaceshipWidth = 50;
-	public static final int spaceshipHeight = 50;
+	public static final int spaceshipWidth = 30;
+	public static final int spaceshipHeight = 15;
 
 	
 	private double positionX, positionY;
