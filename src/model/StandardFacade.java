@@ -103,9 +103,9 @@ public class StandardFacade implements GameObjectFacade {
 	}
 	
 	@Override
-	public void saveData(int score, LocalDateTime time) {
+	public void saveData(int score, LocalDateTime time, String name) {
 		//delegate to the data manager
-		dataManager.saveData(score, time);
+		dataManager.saveData(score, time, name);
 	}
 	
 	@Override

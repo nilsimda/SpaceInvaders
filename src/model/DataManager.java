@@ -20,11 +20,10 @@ public class DataManager {
 	 * @param score the achieved score
 	 * @param time the time at which the game was played
 	 */
-	public void saveData(int score, LocalDateTime time) {
-		//TODO Add a name parameter name, we need to store names too!
+	public void saveData(int score, LocalDateTime time, String name) {
 		try(BufferedWriter bw = Files.newBufferedWriter(scorefile, StandardCharsets.UTF_8,
 				StandardOpenOption.APPEND, StandardOpenOption.CREATE)) {
-			bw.append(new Score(score, time).toString() + "\n");
+			bw.append(new Score(score, time, name).toString() + "\n");
 			bw.flush();
 		}
 		catch(IOException exc) {
@@ -37,7 +36,7 @@ public class DataManager {
 	 * Read all the score information from scorefile.txt and return it as a Stream of Score objects.
 	 */
 	public Stream<Score> getData() {
-		Stream<String> lines = Stream.of("0000-00-00T00:00:00\t0");
+		Stream<String> lines = Stream.of("unknown\t0000-00-00T00:00:00\t0");
 		
 		try(BufferedReader br = Files.newBufferedReader(scorefile, StandardCharsets.UTF_8)) {
 			lines = br.lines();

@@ -10,10 +10,12 @@ public class Score {
 	
 	private int score;
 	private LocalDateTime time;
+	private String name;
 	
-	public Score(int score, LocalDateTime time) {
+	public Score(int score, LocalDateTime time, String name) {
 		this.score = score;
 		this.time = time;
+		this.name = name;
 	}
 	
 	public int getScore() {
@@ -26,12 +28,12 @@ public class Score {
 	
 	@Override
 	public String toString() {
-		return time.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) + "\t" + score;
+		return name + "\t" + time.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) + "\t" + score;
 	}
 	
 	/**
 	 * Parses a String to a Score object. The String has to have the following form: 
-	 * ISO_LOCAL_DATE_TIME\tScore where Score is an int
+	 * name\tISO_LOCAL_DATE_TIME\tScore where Score is an int
 	 * @return
 	 */
 	public static Score parse(String s) {

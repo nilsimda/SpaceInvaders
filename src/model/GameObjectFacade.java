@@ -36,8 +36,8 @@ public interface GameObjectFacade {
 	public int getSpaceshipWidth();
 	public int getSpaceshipHeight();
 	
-	public void saveData(int score, LocalDateTime time);
-	public Stream<model.Score> getData();
+	public void saveData(int score, LocalDateTime time, String name);
+	public Stream<Score> getData();
 	
 	//methods to be invoked by the game objects to acces the game board
 	public int getGUIWidth();
@@ -49,5 +49,5 @@ public interface GameObjectFacade {
 	public void gameOver();
 	
 	//methods to be invoked by the gameobjects to access each other
-	Set<model.Spaceship> getSpaceships();
+	Set<Spaceship> getSpaceships();
 }
