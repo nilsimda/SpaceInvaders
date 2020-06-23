@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 public class DataManager {
 	
-	private static final Path scorefile = Paths.get("..", "resources", "scorefile.txt");
+	private static final Path scorefile = Paths.get("..", "resources", "scorefile.csv");
 	
 	/**
 	 * Save a new tuple of score and time to scorefile.

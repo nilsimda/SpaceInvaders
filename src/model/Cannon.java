@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Comparator;
+import java.util.Optional;
 import java.util.Set;
 
 public class Cannon {
@@ -25,26 +27,25 @@ public class Cannon {
 
 
     /**
-     * Method that is called when the player fires the cannon. Currently "bullets" travel instantly, destroying one
-     * ship in its path, but this can be changed in the future.
+     * Method that is called when the player fires the cannon. Currently "bullets" travel instantly, destroying the
+     * first ship in its path, but this can be changed in the future.
      *
      * @return Scorevalue of the destroyed ship. Later we theoretically can have multiple tiers of ship where each
      * has a different value her, depending on how difficult it is to shoot them down
      */
     public int fire() {
-        int scoreToAdd = 0;
         Set<Spaceship> spaceships = gameBoard.getSpaceships();
-        for (Spaceship s : spaceships) {
-            //if the spaceship is in the firing line of the cannon, destroy it
-            if (s.getX() <= position && s.getX() + Spaceship.spaceshipWidth >= position) {
-                scoreToAdd = s.scorePerShip;
-                s.destroy();
-                break; // So you can only destroy one spaceship at a time
-            }
+        // Only the lowest Spaceship will be removed
+        Optional<Spaceship> destroyedShip = spaceships
+                .stream()
+                .filter(s -> s.getX() <= position && s.getX() + Spaceship.spaceshipWidth >= position)
+                .min(Comparator.comparingDouble(Spaceship::getY));
+        if (destroyedShip.isPresent()) {
+            gameBoard.getSpaceships().remove(destroyedShip.get());
+            destroyedShip.get().destroy();
+            return destroyedShip.get().scorePerShip;
         }
-        //remove the eventually destroyed spaceships from the List
-        spaceships.removeIf(s -> !s.getAlive());
-        return scoreToAdd;
+        return 0;
     }
 
     public int getPosition() {

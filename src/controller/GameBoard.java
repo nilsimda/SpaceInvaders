@@ -5,7 +5,6 @@ import model.GameObjectFacade;
 import model.StandardFacade;
 import view.GUI;
 
-
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
@@ -26,9 +25,10 @@ public class GameBoard {
     }
 
     private GameObjectFacade gameObjects;
-    
+
     /**
      * Creates a new gameboard and game instance for a given GUI
+     *
      * @param size the GUI creating the gameboard
      */
     /*public GameBoard(GUI gui) {
@@ -36,33 +36,54 @@ public class GameBoard {
         this.gameObjects = new StandardFacade(this);
         this.currentScore = 0;
     }*/
-
-    public GameBoard(Dimension2D size){
+    public GameBoard(Dimension2D size) {
         GUI_WIDTH = size.getWidth();
         GUI_HEIGHT = size.getHeight();
         this.gameObjects = new StandardFacade(this);
         this.currentScore = 0;
     }
-    
+
     /**
      * Starts the game
      */
     public void startGame() {
+        GAME_OVER = false;
         startTime = Timestamp.valueOf(LocalDateTime.now());
-        //TODO create a thread for moving the spaceships
-        
-        //TODO terminate the spaceship thread
+
+        // Thread interrupts itself when the game is over
+        MyThread spaceshipThread = new MyThread();
+        spaceshipThread.start();
+
         String name = enterName();
         gameObjects.saveData(currentScore, startTime.toLocalDateTime(), name);
     }
-    
+
+    /**
+     * Class that moves the spaceships, spaceships get moved once every second
+     */
+    class MyThread extends Thread {
+        @Override
+        public void run() {
+            int i = 0;
+            while (!GAME_OVER) {
+                moveSpaceships();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            this.interrupt();
+        }
+    }
+
     public void moveSpaceships() {
         gameObjects.moveSpaceships();
     }
 
     public String enterName() {
         //TODO call a method in GUI that gets the name
-    	return null;
+        return null;
     }
 
     public void gameOver() {
@@ -74,19 +95,20 @@ public class GameBoard {
         if (scoreToAdd < 0) throw new IllegalArgumentException("Can't add negative score!");
         currentScore += scoreToAdd;
     }
-    
+
     /**
      * Moves the cannon by the given delta value
+     *
      * @param delta The distance to move the cannon. Negative values result in movements to the left and vice versa
      */
     public void moveCannon(int delta) {
-    	gameObjects.steerCannon(delta);
+        gameObjects.steerCannon(delta);
     }
-    
+
     /**
      * Fires the cannon
      */
     public void fireCannon() {
-    	gameObjects.fireCannon();
+        gameObjects.fireCannon();
     }
 }
