@@ -33,7 +33,7 @@ public class DataManager {
 	}
 	
 	/**
-	 * Read all the score information from scorefile.txt and return it as a Stream of Score objects.
+	 * Read all the score information from scorefile.csv and return it as a Stream of Score objects.
 	 */
 	public Stream<Score> getData() {
 		Stream<String> lines = Stream.of("unknown\t0000-00-00T00:00:00\t0");

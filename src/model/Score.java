@@ -28,7 +28,7 @@ public class Score {
 
     @Override
     public String toString() {
-        return name + "\t" + time.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) + "\t" + score;
+        return name + "," + time.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) + "," + score;
     }
 
     /**

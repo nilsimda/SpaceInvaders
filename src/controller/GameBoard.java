@@ -34,11 +34,6 @@ public class GameBoard {
      *
      * @param size the GUI creating the gameboard
      */
-    /*public GameBoard(GUI gui) {
-        this.gui = gui;
-        this.gameObjects = new StandardFacade(this);
-        this.currentScore = 0;
-    }*/
     public GameBoard(Dimension2D size) {
         GUI_WIDTH = size.getWidth();
         GUI_HEIGHT = size.getHeight();
@@ -67,7 +62,7 @@ public class GameBoard {
     class MyThread extends Thread {
         @Override
         public void run() {
-            int i = 0;
+            int i = 0; //what does this do?
             while (!GAME_OVER) {
                 moveSpaceships();
                 try {
