@@ -49,7 +49,7 @@ public class GameBoard {
         startTime = Timestamp.valueOf(LocalDateTime.now());
 
         // Thread interrupts itself when the game is over
-        spaceshipThread spaceshipThread = new spaceshipThread();
+        SpaceshipThread spaceshipThread = new SpaceshipThread();
         spaceshipThread.start();
 
         String name = enterName();
