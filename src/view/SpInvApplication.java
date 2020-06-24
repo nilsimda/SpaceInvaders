@@ -41,9 +41,11 @@ public class SpInvApplication extends Application {
                 gridLayout.setVgap(5);
                 gridLayout.setPadding(new Insets(5, 5, 5, 5));
 
-                // add gui to the gridLayout
+                // add gui and score to the gridLayout
                 // second parameter is column index, second parameter is row index of grid
-                gridLayout.add(gui, 0, 0);
+                Text score = new Text("Score: " + gui.getGameBoard().getCurrentScore());
+                gridLayout.add(gui, 0, 1);
+                gridLayout.add(score, 0,0);
 
                 // scene and stages
                 Scene scene = new Scene(gridLayout);
@@ -71,7 +73,8 @@ public class SpInvApplication extends Application {
                             if (e.getCode().equals(KeyCode.RIGHT))
                                 gui.getGameBoard().getGameObjects().steerCannon(5);
                             if (e.getCode().equals(KeyCode.SPACE)) {
-                                gui.getGameBoard().getGameObjects().fireCannon();
+                                gui.getGameBoard().fireCannon();
+                                score.setText("Score: " + gui.getGameBoard().getCurrentScore());
                                 if (gui.getGameBoard().getGameObjects().getSpaceships().isEmpty()) {
                                     gui.stopGame();
                                     Text winText = new Text("YOU WIN");

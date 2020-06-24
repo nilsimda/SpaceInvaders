@@ -119,4 +119,8 @@ public class GameBoard {
     public void fireCannon() {
         gameObjects.fireCannon();
     }
+
+    public int getCurrentScore(){
+        return currentScore;
+    }
 }
