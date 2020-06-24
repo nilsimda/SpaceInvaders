@@ -24,7 +24,7 @@ public class GameBoard {
     public GameObjectFacade getGameObjects() {
         return gameObjects;
     }
-    public boolean isGAME_OVER(){
+    public boolean getGAME_OVER(){
         return GAME_OVER;
     }
 

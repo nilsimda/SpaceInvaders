@@ -10,10 +10,12 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -22,6 +24,7 @@ public class SpInvApplication extends Application {
 
     private GUI gui = new GUI();
     private Stage primaryStage;
+    private static String PLAYER_NAME;
 
 
     //Application and GUI setup is to be put here
@@ -56,7 +59,7 @@ public class SpInvApplication extends Application {
 
                 Thread gameThread = new Thread(() -> { //using a Thread for the main game
 
-                    while (!gui.getGameBoard().isGAME_OVER()) {
+                    while (!gui.getGameBoard().getGAME_OVER()) {
                         scene.setOnKeyPressed(e -> {
                             if (e.getCode().equals(KeyCode.ESCAPE)) {
                                 gui.stopGame();
@@ -78,12 +81,13 @@ public class SpInvApplication extends Application {
                             }
                         });
                     }
-                    if (gui.getGameBoard().getGameObjects().getSpaceships().isEmpty()) { //if all spaceships are destroyed the player has won
+                    if (gui.getGameBoard().getGameObjects().getSpaceships().isEmpty()) { //if all spaceships are destroyed, the player has won
                         displayEndScreen("You win!");
                     }
                     else {
-                        displayEndScreen("You lose!"); // game is over but spaceships are still alive
+                        displayEndScreen("You lose!"); // game is over but spaceships are still alive, the player has lost
                     }
+                    System.out.println(PLAYER_NAME);
                 });
                 gameThread.setDaemon(true);
                 gameThread.start();
@@ -97,10 +101,32 @@ public class SpInvApplication extends Application {
         int finalScore = gui.getGameBoard().getCurrentScore();
         gui.stopGame();
         Text endText = new Text(message + " Your final score is " + finalScore);
-        Group group = new Group(endText);
-        Scene endScene = new Scene(group, 500, 300);
-        endText.setX(50);
-        endText.setY(50);
+        Label nameLabel = new Label("Enter your name to save your score:");
+        TextField textField = new TextField();
+        Button saveButton = new Button("Save");
+        VBox vBox = new VBox();
+        vBox.setSpacing(10);
+        vBox.getChildren().addAll(endText, nameLabel, textField, saveButton);
+        Scene endScene = new Scene(vBox, 500, 300);
+
+        saveButton.setOnAction(e->
+        {
+            PLAYER_NAME = textField.getText();
+            Text savedMessage = new Text("Thank you " + PLAYER_NAME + ". Your score was saved successfully!");
+            savedMessage.setX(50);
+            savedMessage.setY(50);
+            Group group = new Group(savedMessage);
+            Scene saveScene = new Scene(group, 500, 300);
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    primaryStage.setTitle("TUM SpaceInvaders End Screen");
+                    primaryStage.setScene(saveScene);
+                    primaryStage.show();
+                }
+            });
+
+        });
         Platform.runLater(new Runnable() {
             @Override
             public void run() {

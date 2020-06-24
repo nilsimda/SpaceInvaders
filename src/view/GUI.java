@@ -119,7 +119,7 @@ public class GUI extends Canvas implements Runnable {
 
     @Override
     public void run() {
-        while (!this.gameBoard.isGAME_OVER()) {
+        while (!this.gameBoard.getGAME_OVER()) {
             paint(this.graphicsContext);
             try {
                 Thread.sleep(SLEEP_TIME); // milliseconds to sleep
