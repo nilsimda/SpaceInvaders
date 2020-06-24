@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,6 +13,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
@@ -62,9 +64,19 @@ public class SpInvApplication extends Application {
                 });
             }
         });
-
         primaryStage.setScene(startScene);
         primaryStage.show();
+        while(true) {
+            if (gui.getGameBoard().getGameObjects().getSpaceships().isEmpty()) {
+                gui.stopGame();
+                Text winText = new Text("YOU WIN");
+                Group group = new Group(winText);
+                Scene endScene = new Scene(group, 500, 300);
+                primaryStage.setScene(endScene);
+                primaryStage.show();
+                break;
+            }
+        }
     }
 
 
