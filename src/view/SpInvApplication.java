@@ -2,6 +2,7 @@ package view;
 
 import controller.GameBoard;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -17,9 +18,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
-public class SpInvApplication extends Application{
+public class SpInvApplication extends Application {
 
-    private GUI gui;
+    private GUI gui = new GUI();
 
 
     //Application and GUI setup is to be put here
@@ -28,12 +29,11 @@ public class SpInvApplication extends Application{
         primaryStage.setTitle("TUM SpaceInvaders StartScreen");
         Button start = new Button("Start");
         Button score = new Button("Score");
-        HBox hBox = new HBox(start,score);
-        Scene startScene = new Scene(hBox,500,300);
+        HBox hBox = new HBox(start, score);
+        Scene startScene = new Scene(hBox, 500, 300);
         start.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                gui = new GUI();
                 GridPane gridLayout = new GridPane();
                 gridLayout.setPrefSize(500, 300);
                 gridLayout.setVgap(5);
@@ -49,35 +49,18 @@ public class SpInvApplication extends Application{
                 primaryStage.setScene(scene);
                 primaryStage.show();
                 gui.startGame();
-                Thread t = new Thread(){
-                    @Override
-                    public void run() {
-                        while(true){
-                            if(gui.getGameBoard().gameLost()) {
-                                gui.stopGame();
-                                Text looseText = new Text("You lose!");
-                                Group group = new Group(looseText);
-                                Scene loseScene = new Scene(group);
-                                primaryStage.setTitle("TUM SpaceInvaders End Scene");
-                                primaryStage.setScene(loseScene);
-                                primaryStage.show();
-                                break;
-                            }
-                        }
-                    }
-                };
-                t.start();
-                scene.setOnKeyPressed(e ->{
-                    if(e.getCode().equals(KeyCode.ESCAPE)) {
+
+                scene.setOnKeyPressed(e -> {
+                    if (e.getCode().equals(KeyCode.ESCAPE)) {
                         gui.stopGame();
                         primaryStage.setScene(startScene);
                         primaryStage.show();
                     }
-                    if(e.getCode().equals(KeyCode.LEFT))
+                    if (e.getCode().equals(KeyCode.LEFT))
                         gui.getGameBoard().getGameObjects().steerCannon(-5);
-                    if(e.getCode().equals(KeyCode.RIGHT))
+                    if (e.getCode().equals(KeyCode.RIGHT))
                         gui.getGameBoard().getGameObjects().steerCannon(5);
-                    if(e.getCode().equals(KeyCode.SPACE)) {
+                    if (e.getCode().equals(KeyCode.SPACE)) {
                         gui.getGameBoard().getGameObjects().fireCannon();
                         if (gui.getGameBoard().getGameObjects().getSpaceships().isEmpty()) {
                             gui.stopGame();
@@ -90,6 +73,17 @@ public class SpInvApplication extends Application{
                             primaryStage.setScene(endScene);
                             primaryStage.show();
                         }
+                    }
+                    if (gui.getGameBoard().gameLost()) {
+                        gui.stopGame();
+                        Text loseText = new Text("You lose!");
+                        loseText.setX(50);
+                        loseText.setY(50);
+                        Group group = new Group(loseText);
+                        Scene loseScene = new Scene(group, 500, 300);
+                        primaryStage.setTitle("TUM SpaceInvaders End Scene");
+                        primaryStage.setScene(loseScene);
+                        primaryStage.show();
                     }
 
                 });
