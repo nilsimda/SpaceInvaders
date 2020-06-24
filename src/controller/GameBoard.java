@@ -2,6 +2,7 @@ package controller;
 
 import javafx.geometry.Dimension2D;
 import model.GameObjectFacade;
+import model.Spaceship;
 import model.StandardFacade;
 import view.GUI;
 
@@ -93,6 +94,14 @@ public class GameBoard {
     public void addToScore(int scoreToAdd) {
         if (scoreToAdd < 0) throw new IllegalArgumentException("Can't add negative score!");
         currentScore += scoreToAdd;
+    }
+
+    public boolean gameLost(){
+        for(Spaceship s: gameObjects.getSpaceships()){
+            if(s.getY() <= 0)
+                return true;
+        }
+        return false;
     }
 
     /**

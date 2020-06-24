@@ -38,7 +38,7 @@ public class StandardFacade implements GameObjectFacade {
 		//simple moving algorithm that just moves all the spaceships one pixel closer to the ground
 		synchronized (spaceships) {
 			for (Spaceship s : spaceships) {
-				s.move(0, -1);
+				s.move(0, -15);
 			}
 		}
 	}
