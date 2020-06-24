@@ -8,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -48,6 +49,14 @@ public class SpInvApplication extends Application {
                 primaryStage.setScene(scene);
                 primaryStage.show();
                 gui.startGame();
+                scene.setOnKeyPressed(e ->{
+                    /*if(e.getCode().equals(KeyCode.ESCAPE))
+                        gui.stopGame();*/
+                    if(e.getCode().equals(KeyCode.LEFT))
+                        gui.getGameBoard().getGameObjects().steerCannon(-5);
+                    if(e.getCode().equals(KeyCode.RIGHT))
+                        gui.getGameBoard().getGameObjects().steerCannon(5);
+                });
             }
         });
 

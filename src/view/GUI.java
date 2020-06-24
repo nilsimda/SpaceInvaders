@@ -104,13 +104,17 @@ public class GUI extends Canvas implements Runnable {
     }
 
     private void paintCannon(Cannon cannon, GraphicsContext graphics) {
-        Point2D cannonPos = new Point2D(cannon.getPosition(), 50);
+        Point2D cannonPos = new Point2D(cannon.getPosition(), 30);
         Point2D canvasPosition = convertPosition(cannonPos);
         graphics.drawImage(getCannonImage(), canvasPosition.getX(), canvasPosition.getY(), Cannon.cannonWidth, Cannon.cannonHeight);
     }
 
     public Point2D convertPosition(Point2D toConvert) {
         return new Point2D(toConvert.getX(), getHeight() - toConvert.getY());
+    }
+
+    public GameBoard getGameBoard(){
+        return gameBoard;
     }
 
 

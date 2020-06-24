@@ -6,8 +6,8 @@ import java.util.Set;
 
 public class Cannon {
 
-    public static double cannonHeight = 45;
-    public static double cannonWidth = 45;
+    public static double cannonHeight = 30;
+    public static double cannonWidth = 40;
     private int position;
     private final GameObjectFacade gameBoard;
 
