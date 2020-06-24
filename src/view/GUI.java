@@ -1,22 +1,18 @@
 package view;
 
 import controller.GameBoard;
-
-import javafx.application.Application;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import model.Cannon;
 import model.Spaceship;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.HashMap;
 
 
 public class GUI extends Canvas implements Runnable {
@@ -87,10 +83,12 @@ public class GUI extends Canvas implements Runnable {
         graphics.setFill(backgroundColor);
         graphics.fillRect(0, 0, getWidth(), getHeight());
 
-        for (Spaceship spaceship : this.gameBoard.getGameObjects().getSpaceships()) {
-            paintSpaceships(spaceship, graphics);
-        }
 
+        synchronized (this.gameBoard.getGameObjects().getSpaceships()) {
+            for (Spaceship spaceship : this.gameBoard.getGameObjects().getSpaceships()) {
+                paintSpaceships(spaceship, graphics);
+            }
+        }
         paintCannon(this.gameBoard.getGameObjects().getCannon(), graphics);
 
     }
@@ -113,7 +111,7 @@ public class GUI extends Canvas implements Runnable {
         return new Point2D(toConvert.getX(), getHeight() - toConvert.getY());
     }
 
-    public GameBoard getGameBoard(){
+    public GameBoard getGameBoard() {
         return gameBoard;
     }
 
@@ -121,8 +119,6 @@ public class GUI extends Canvas implements Runnable {
     @Override
     public void run() {
         while (!this.gameBoard.isGAME_OVER()) {
-            //TODO move cannon according to user input
-            this.gameBoard.getGameObjects().moveSpaceships(); //only moves Spaceships currently
             paint(this.graphicsContext);
             try {
                 Thread.sleep(SLEEP_TIME); // milliseconds to sleep

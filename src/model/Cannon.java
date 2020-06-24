@@ -22,7 +22,7 @@ public class Cannon {
     }
 
     public void steer(int delta) {
-        position = (int) ((position + delta) % gameBoard.getGUIWidth());
+        position = (int) Math.max(Math.min(position + delta, gameBoard.getGUIWidth() - cannonWidth), 0);
     }
 
 
@@ -34,18 +34,21 @@ public class Cannon {
      * has a different value her, depending on how difficult it is to shoot them down
      */
     public int fire() {
-        Set<Spaceship> spaceships = gameBoard.getSpaceships();
-        // Only the lowest Spaceship will be removed
-        Optional<Spaceship> destroyedShip = spaceships
-                .stream()
-                .filter(s -> s.getX() <= position && s.getX() + Spaceship.spaceshipWidth >= position)
-                .min(Comparator.comparingDouble(Spaceship::getY));
-        if (destroyedShip.isPresent()) {
-            gameBoard.getSpaceships().remove(destroyedShip.get());
-            destroyedShip.get().destroy();
-            return destroyedShip.get().scorePerShip;
+        synchronized (gameBoard.getSpaceships()) {
+            Set<Spaceship> spaceships = gameBoard.getSpaceships();
+            // Only the lowest Spaceship will be removed
+            Optional<Spaceship> destroyedShip = spaceships
+                    .stream()
+                    .filter(s -> s.getX() <= position + cannonWidth / 2 &&
+                            s.getX() + Spaceship.spaceshipWidth >= position + cannonWidth / 2)
+                    .min(Comparator.comparingDouble(Spaceship::getY));
+            if (destroyedShip.isPresent()) {
+                gameBoard.getSpaceships().remove(destroyedShip.get());
+                destroyedShip.get().destroy();
+                return destroyedShip.get().scorePerShip;
+            }
+            return 0;
         }
-        return 0;
     }
 
     public int getPosition() {

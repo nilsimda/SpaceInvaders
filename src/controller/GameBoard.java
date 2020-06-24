@@ -49,7 +49,7 @@ public class GameBoard {
         startTime = Timestamp.valueOf(LocalDateTime.now());
 
         // Thread interrupts itself when the game is over
-        MyThread spaceshipThread = new MyThread();
+        spaceshipThread spaceshipThread = new spaceshipThread();
         spaceshipThread.start();
 
         String name = enterName();
@@ -59,12 +59,13 @@ public class GameBoard {
     /**
      * Class that moves the spaceships, spaceships get moved once every second
      */
-    class MyThread extends Thread {
+    class SpaceshipThread extends Thread {
         @Override
         public void run() {
-            int i = 0; //what does this do?
             while (!GAME_OVER) {
-                moveSpaceships();
+                synchronized (gameObjects.getSpaceships()) {
+                    moveSpaceships();
+                }
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
