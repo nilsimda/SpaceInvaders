@@ -71,6 +71,8 @@ public class StandardFacade implements GameObjectFacade {
 		int val = cannon.fire();
 		//forward score to gameBoard
 		gameBoard.addToScore(val);
+		if(spaceships.isEmpty()) //can be removed later in case the game should not be winnable but highscore based
+			gameOver();
 	}
 
 	@Override

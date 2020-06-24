@@ -75,36 +75,15 @@ public class SpInvApplication extends Application {
                             if (e.getCode().equals(KeyCode.SPACE)) {
                                 gui.getGameBoard().fireCannon();
                                 score.setText("Score: " + gui.getGameBoard().getCurrentScore());
-                                if (gui.getGameBoard().getGameObjects().getSpaceships().isEmpty()) {
-                                    gui.stopGame();
-                                    Text winText = new Text("YOU WIN");
-                                    Group group = new Group(winText);
-                                    Scene endScene = new Scene(group, 500, 300);
-                                    winText.setX(50);
-                                    winText.setY(50);
-                                    Platform.runLater(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            primaryStage.setTitle("TUM SpaceInvaders End Screen");
-                                            primaryStage.setScene(endScene);
-                                            primaryStage.show();
-                                        }
-                                    });
-                                }
                             }
                         });
                     }
-                    Platform.runLater(() -> {
-                        gui.stopGame();
-                        Text loseText = new Text("You lose!");
-                        loseText.setX(50);
-                        loseText.setY(50);
-                        Group group = new Group(loseText);
-                        Scene loseScene = new Scene(group, 500, 300);
-                        primaryStage.setTitle("TUM SpaceInvaders End Scene");
-                        primaryStage.setScene(loseScene);
-                        primaryStage.show();
-                    });
+                    if (gui.getGameBoard().getGameObjects().getSpaceships().isEmpty()) { //if all spaceships are destroyed the player has won
+                        displayEndScreen("You win!");
+                    }
+                    else {
+                        displayEndScreen("You lose!"); // game is over but spaceships are still alive
+                    }
                 });
                 gameThread.setDaemon(true);
                 gameThread.start();
@@ -112,6 +91,24 @@ public class SpInvApplication extends Application {
         });
         primaryStage.setScene(startScene);
         primaryStage.show();
+    }
+
+    public void displayEndScreen(String message){
+        int finalScore = gui.getGameBoard().getCurrentScore();
+        gui.stopGame();
+        Text endText = new Text(message + " Your final score is " + finalScore);
+        Group group = new Group(endText);
+        Scene endScene = new Scene(group, 500, 300);
+        endText.setX(50);
+        endText.setY(50);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                primaryStage.setTitle("TUM SpaceInvaders End Screen");
+                primaryStage.setScene(endScene);
+                primaryStage.show();
+            }
+        });
     }
 
     public static void launchApp(String[] args) {
