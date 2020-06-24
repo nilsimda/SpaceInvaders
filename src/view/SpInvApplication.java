@@ -56,6 +56,8 @@ public class SpInvApplication extends Application {
                         gui.getGameBoard().getGameObjects().steerCannon(-5);
                     if(e.getCode().equals(KeyCode.RIGHT))
                         gui.getGameBoard().getGameObjects().steerCannon(5);
+                    if(e.getCode().equals(KeyCode.SPACE))
+                        gui.getGameBoard().getGameObjects().fireCannon();
                 });
             }
         });
