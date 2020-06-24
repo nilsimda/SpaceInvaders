@@ -26,8 +26,6 @@ public class SpInvApplication extends Application {
         primaryStage.setTitle("TUM SpaceInvaders StartScreen");
         Button start = new Button("Start");
         Button score = new Button("Score");
-        //start.setMaxHeight(100);
-        //start.setMaxWidth(200);
         HBox hBox = new HBox(start,score);
         Scene startScene = new Scene(hBox,500,300);
         start.setOnAction(new EventHandler<ActionEvent>() {
@@ -50,8 +48,11 @@ public class SpInvApplication extends Application {
                 primaryStage.show();
                 gui.startGame();
                 scene.setOnKeyPressed(e ->{
-                    /*if(e.getCode().equals(KeyCode.ESCAPE))
-                        gui.stopGame();*/
+                    if(e.getCode().equals(KeyCode.ESCAPE)) {
+                        gui.stopGame();
+                        primaryStage.setScene(startScene);
+                        primaryStage.show();
+                    }
                     if(e.getCode().equals(KeyCode.LEFT))
                         gui.getGameBoard().getGameObjects().steerCannon(-5);
                     if(e.getCode().equals(KeyCode.RIGHT))

@@ -38,9 +38,6 @@ public class GUI extends Canvas implements Runnable {
         this.widthProperty().set(this.size.getWidth());
         this.heightProperty().set(this.size.getHeight());
         this.size = new Dimension2D(getWidth(), getHeight());
-        /*this.gameBoard.resetCars();
-        this.gameBoard.getGameObjects().getSpaceships().forEach((car -> this.carImages.put(car, getImage(car.getIconLocation()))));
-        this.carImages.put(this.gameBoard.getPlayerCar(), this.getImage(this.gameBoard.getPlayerCar().getIconLocation()));*/
         paint(this.graphicsContext);
     }
 
@@ -49,6 +46,10 @@ public class GUI extends Canvas implements Runnable {
         thread = new Thread(this);
         thread.start();
         paint(this.graphicsContext);
+    }
+
+    public void stopGame(){
+        this.gameBoard.gameOver();
     }
 
     private Image getSpaceShipImage() {
