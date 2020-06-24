@@ -57,6 +57,14 @@ public class GameBoard {
         gameObjects.saveData(currentScore, startTime.toLocalDateTime(), name);
     }
 
+    public boolean isGameLost(){
+        for(Spaceship s: gameObjects.getSpaceships()){
+            if(s.getY() <= 0)
+                return true;
+        }
+        return false;
+    }
+
     /**
      * Class that moves the spaceships, spaceships get moved once every second
      */
@@ -94,14 +102,6 @@ public class GameBoard {
     public void addToScore(int scoreToAdd) {
         if (scoreToAdd < 0) throw new IllegalArgumentException("Can't add negative score!");
         currentScore += scoreToAdd;
-    }
-
-    public boolean gameLost(){
-        for(Spaceship s: gameObjects.getSpaceships()){
-            if(s.getY() <= 0)
-                return true;
-        }
-        return false;
     }
 
     /**

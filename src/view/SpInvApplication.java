@@ -21,11 +21,13 @@ import javafx.stage.Stage;
 public class SpInvApplication extends Application {
 
     private GUI gui = new GUI();
+    private Stage primaryStage;
 
 
     //Application and GUI setup is to be put here
     @Override
     public void start(Stage primaryStage) {
+        this.primaryStage = primaryStage;
         primaryStage.setTitle("TUM SpaceInvaders StartScreen");
         Button start = new Button("Start");
         Button score = new Button("Score");
@@ -50,31 +52,46 @@ public class SpInvApplication extends Application {
                 primaryStage.show();
                 gui.startGame();
 
-                scene.setOnKeyPressed(e -> {
-                    if (e.getCode().equals(KeyCode.ESCAPE)) {
-                        gui.stopGame();
-                        primaryStage.setScene(startScene);
-                        primaryStage.show();
+                Thread gameThread = new Thread(() -> { //using a Thread for the main game
+
+                    while (!gui.getGameBoard().isGAME_OVER()) {
+                        scene.setOnKeyPressed(e -> {
+                            if (e.getCode().equals(KeyCode.ESCAPE)) {
+                                gui.stopGame();
+                                Platform.runLater(new Runnable() { //adding task to queue of application thread (only application thread can change stages)
+                                    @Override
+                                    public void run() {
+                                        primaryStage.setScene(startScene);
+                                        primaryStage.show();
+                                    }
+                                });
+                            }
+                            if (e.getCode().equals(KeyCode.LEFT))
+                                gui.getGameBoard().getGameObjects().steerCannon(-5);
+                            if (e.getCode().equals(KeyCode.RIGHT))
+                                gui.getGameBoard().getGameObjects().steerCannon(5);
+                            if (e.getCode().equals(KeyCode.SPACE)) {
+                                gui.getGameBoard().getGameObjects().fireCannon();
+                                if (gui.getGameBoard().getGameObjects().getSpaceships().isEmpty()) {
+                                    gui.stopGame();
+                                    Text winText = new Text("YOU WIN");
+                                    Group group = new Group(winText);
+                                    Scene endScene = new Scene(group, 500, 300);
+                                    winText.setX(50);
+                                    winText.setY(50);
+                                    Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            primaryStage.setTitle("TUM SpaceInvaders End Screen");
+                                            primaryStage.setScene(endScene);
+                                            primaryStage.show();
+                                        }
+                                    });
+                                }
+                            }
+                        });
                     }
-                    if (e.getCode().equals(KeyCode.LEFT))
-                        gui.getGameBoard().getGameObjects().steerCannon(-5);
-                    if (e.getCode().equals(KeyCode.RIGHT))
-                        gui.getGameBoard().getGameObjects().steerCannon(5);
-                    if (e.getCode().equals(KeyCode.SPACE)) {
-                        gui.getGameBoard().getGameObjects().fireCannon();
-                        if (gui.getGameBoard().getGameObjects().getSpaceships().isEmpty()) {
-                            gui.stopGame();
-                            Text winText = new Text("YOU WIN");
-                            Group group = new Group(winText);
-                            Scene endScene = new Scene(group, 500, 300);
-                            winText.setX(50);
-                            winText.setY(50);
-                            primaryStage.setTitle("TUM SpaceInvaders End Screen");
-                            primaryStage.setScene(endScene);
-                            primaryStage.show();
-                        }
-                    }
-                    if (gui.getGameBoard().gameLost()) {
+                    Platform.runLater(() -> {
                         gui.stopGame();
                         Text loseText = new Text("You lose!");
                         loseText.setX(50);
@@ -84,9 +101,10 @@ public class SpInvApplication extends Application {
                         primaryStage.setTitle("TUM SpaceInvaders End Scene");
                         primaryStage.setScene(loseScene);
                         primaryStage.show();
-                    }
-
+                    });
                 });
+                gameThread.setDaemon(true);
+                gameThread.start();
             }
         });
         primaryStage.setScene(startScene);

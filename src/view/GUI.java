@@ -128,4 +128,5 @@ public class GUI extends Canvas implements Runnable {
             }
         }
     }
+    //TODO: Fix flickering
 }
