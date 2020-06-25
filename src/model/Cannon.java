@@ -22,7 +22,7 @@ public class Cannon {
     }
 
     public void steer(int delta) {
-        position = (int) Math.max(Math.min(position + delta, gameBoard.getGUIWidth() - cannonWidth), 0);
+        position = (int) Math.max(Math.min(position + delta, gameBoard.getGUIWidth() -cannonWidth), 0);
     }
 
 
