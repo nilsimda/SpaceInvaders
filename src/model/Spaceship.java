@@ -42,7 +42,7 @@ public class Spaceship {
 	public void move(int deltaX, int deltaY) {
 		positionX = (positionX + deltaX) % (gameBoard.getGUIWidth() - spaceshipWidth);
 		positionY = (positionY + deltaY);
-		if(this.positionY <= 0) {
+		if(this.positionY >= 500) {
 			//the spaceship has hit the ground
 			this.gameBoard.gameOver();
 		}

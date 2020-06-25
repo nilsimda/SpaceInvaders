@@ -55,7 +55,7 @@ public class GameBoard {
 
     public boolean isGameLost(){
         for(Spaceship s: gameObjects.getSpaceships()){
-            if(s.getY() <= 0)
+            if(s.getY() <= 500)
                 return true;
         }
         return false;
