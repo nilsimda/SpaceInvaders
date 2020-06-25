@@ -38,7 +38,7 @@ public class StandardFacade implements GameObjectFacade {
 		//simple moving algorithm that just moves all the spaceships one pixel closer to the ground
 		synchronized (spaceships) {
 			for (Spaceship s : spaceships) {
-				s.move(0, -15);
+				s.move(0, 15);
 			}
 		}
 	}
@@ -48,14 +48,17 @@ public class StandardFacade implements GameObjectFacade {
 	 */
 	@Override
 	public void spawnRandomSpaceships() {
-		int numberOfSpaceships = 1 + (int)(Math.random() * 10);
-		int coordinate = 0;
+		int numberOfSpaceships = 8; //1 + (int)(Math.random() * 10);
+		/*int coordinate = 0;
 		for(int i=0; i<numberOfSpaceships; i++) {
 			coordinate = coordinate +						//spawn the spaceship left of the previous ones
 					(int)(Math.random() *					//in a random location
 					(GameBoard.GUI_WIDTH - Spaceship.spaceshipWidth - coordinate) /
 					(numberOfSpaceships - i));				//so that there is enough space for the other ones
 			spaceships.add(new Spaceship(this, coordinate));
+		}*/
+		for(int i = 0; i < numberOfSpaceships; i++){
+			spaceships.add(new Spaceship(this, i*50));
 		}
 	}
 	

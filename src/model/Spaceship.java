@@ -22,7 +22,7 @@ public class Spaceship {
 		this.gameBoard = gameBoard;
 		this.alive = true;
 		this.positionX = posX;
-		this.positionY = gameBoard.getGUIHeight() - (spaceshipHeight + 10);
+		this.positionY = 100;//gameBoard.getGUIHeight() - (spaceshipHeight + 10);
 	}
 	
 	/**

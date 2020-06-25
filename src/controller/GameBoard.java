@@ -49,10 +49,6 @@ public class GameBoard {
         GAME_OVER = false;
         startTime = Timestamp.valueOf(LocalDateTime.now());
 
-        // Thread interrupts itself when the game is over
-        SpaceshipThread spaceshipThread = new SpaceshipThread();
-        spaceshipThread.start();
-
         String name = enterName();
         gameObjects.saveData(currentScore, startTime.toLocalDateTime(), name);
     }
@@ -63,26 +59,6 @@ public class GameBoard {
                 return true;
         }
         return false;
-    }
-
-    /**
-     * Class that moves the spaceships, spaceships get moved once every second
-     */
-    class SpaceshipThread extends Thread {
-        @Override
-        public void run() {
-            while (!GAME_OVER) {
-                synchronized (gameObjects.getSpaceships()) {
-                    moveSpaceships();
-                }
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            this.interrupt();
-        }
     }
 
     public void moveSpaceships() {
