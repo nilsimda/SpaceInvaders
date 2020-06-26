@@ -55,10 +55,13 @@ public class GUI extends Application {
     }
 
     public Scene createStartScreen() {
+        Text shoot = new Text("Shoot: SpaceBar (no Bullet Image yet)");
+        Text move = new Text("Move Cannon: Left and right arrow keys");
         Button start = new Button("Start");
         Button score = new Button("Score");
-        HBox hBox = new HBox(start, score);
-        return new Scene(hBox, 500, 300);
+        VBox vBox = new VBox(shoot, move, start, score);
+        vBox.setSpacing(10);
+        return new Scene(vBox, 500, 300);
     }
 
     public void gameSetup(Stage primaryStage) {
@@ -80,10 +83,16 @@ public class GUI extends Application {
     public void start(Stage primaryStage) {
         gameSetup(primaryStage);
         primaryStage.setTitle("TUM SpaceInvaders StartScreen");
+        Text controls = new Text("Controls");
+        Text shoot = new Text("Shoot: SpaceBar (no Bullet Image yet)");
+        Text move = new Text("Move Cannon: Left and right arrow keys");
+        controls.setUnderline(true);
+        
         Button start = new Button("Start");
-        Button score = new Button("Score");
-        HBox hBox = new HBox(start, score);
-        Scene startScene = new Scene(hBox, 500, 300);
+        Button score = new Button("Scores");
+        VBox vBox = new VBox(controls,shoot, move, start, score);
+        vBox.setSpacing(10);
+        Scene startScene = new Scene(vBox, 500 ,300);
         primaryStage.setScene(startScene);
         primaryStage.show();
         start.setOnAction(new EventHandler<ActionEvent>() {
